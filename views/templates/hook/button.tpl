@@ -1,0 +1,1 @@
+<a href="{url entity='cms' id=3 id_lang=1}">Działam</a>
