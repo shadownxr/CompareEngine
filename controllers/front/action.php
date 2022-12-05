@@ -6,14 +6,23 @@ class CompareActionModuleFrontController extends ModuleFrontController {
         parent::initContent();
         
         $lang_id = (int) Configuration::get('PS_LANG_DEFAULT');
+        $basePrice = 0;
+        $valueDifference = [0 => 0];
 
-        $products = json_decode($this->context->cookie->__get('CompareProducts'));
-        foreach($products as &$value) {
-            $product[] = new Product($value, false, $lang_id);
+        $cookieProduct = json_decode($this->context->cookie->__get('CompareProducts'));
+        foreach($cookieProduct as $key => $value) {
+            $products[] = new Product($value, false, $lang_id);
+            if($key == 0){
+                $basePrice = $products[$key]->price;
+                $valueDifference[$key] = 0;
+            } else {
+                $valueDifference[$key] = 100 - (($basePrice / $products[$key]->price) * 100);
+            }
         }
 
         $this->context->smarty->assign([
-            'array_product' => $product,
+            'array_product' => $products,
+            'value_difference' => $valueDifference,
             'url' => 'http://prestashop/module/compare/action'
         ]);
 
