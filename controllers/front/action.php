@@ -23,7 +23,7 @@ class CompareActionModuleFrontController extends ModuleFrontController {
         $this->context->smarty->assign([
             'array_product' => $products,
             'value_difference' => $valueDifference,
-            'url' => 'http://prestashop/module/compare/action'
+            'url' => $this->getCurrentURL()
         ]);
 
         $this->setTemplate("module:compare/views/templates/front/list.tpl");
